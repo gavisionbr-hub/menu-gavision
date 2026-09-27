@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cardápio Instax – Gavision Studio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+        }
+
+        body {
+            background: #1a0a2e;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 30px 20px;
+        }
+
+        .menu-card {
+            max-width: 1200px;
+            width: 100%;
+            background: #ffffff;
+            border-radius: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+            padding: 40px 30px 50px;
+            border: 3px solid #ff6b00;
+        }
+
+        .menu-header {
+            text-align: center;
+            padding-bottom: 25px;
+            border-bottom: 2px solid #f0f0f0;
+            margin-bottom: 20px;
+        }
+
+        .menu-header h1 {
+            font-size: 2.8rem;
+            font-weight: 300;
+            color: #1a0a2e;
+            letter-spacing: -0.5px;
+        }
+
+        .menu-header h1 strong {
+            font-weight: 700;
+            color: #000;
+        }
+
+        .menu-header .sub {
+            color: #666;
+            font-size: 1.1rem;
+            margin-top: 6px;
+            font-weight: 400;
+        }
+
+        .badge-cliente {
+            background: #7b2cbf;
+            color: white;
+            font-weight: 700;
+            font-size: 0.8rem;
+            padding: 8px 24px;
+            border-radius: 50px;
+            display: inline-block;
+            margin-top: 10px;
+            letter-spacing: 0.5px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .badge-oferta {
+            background: #ff6b00;
+            color: white;
+            font-weight: 600;
+            font-size: 0.8rem;
+            padding: 6px 20px;
+            border-radius: 50px;
+            display: inline-block;
+            margin-top: 10px;
+        }
+
+        .validade-badge {
+            background: #fff0f0;
+            border: 1px solid #ff6b00;
+            padding: 8px 20px;
+            border-radius: 40px;
+            display: inline-block;
+            margin-top: 10px;
+            font-weight: 500;
+            color: #c0392b;
+            font-size: 0.85rem;
+        }
+
+        .validade-badge strong {
+            color: #a93226;
+        }
+
+        .whatsapp-instrucao {
+            background: #e8f5e9;
+            padding: 10px 24px;
+            border-radius: 40px;
+            display: inline-block;
+            margin-bottom: 20px;
+            font-weight: 500;
+            color: #2e7d32;
+            font-size: 0.95rem;
+        }
+
+        .info-instax-balao {
+            display: block;
+            max-width: 720px;
+            margin: 0 auto 25px;
+            background: linear-gradient(135deg, #e8f5e9 0%, #d4edda 100%);
+            border: 2px dashed #25d366;
+            border-radius: 24px;
+            padding: 18px 24px;
+            text-decoration: none;
+            color: #333;
+            position: relative;
+            transition: all 0.25s ease;
+            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.15);
+        }
+
+        .info-instax-balao:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 28px rgba(37, 211, 102, 0.28);
+            border-color: #1da851;
+        }
+
+        .info-instax-balao .balao-titulo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1rem;
+            font-weight: 700;
+            color: #1e7e34;
+            margin-bottom: 6px;
+        }
+
+        .info-instax-balao .balao-titulo .icone {
+            background: #25d366;
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            flex-shrink: 0;
+        }
+
+        .info-instax-balao .balao-texto {
+            font-size: 0.9rem;
+            color: #555;
+            line-height: 1.5;
+            padding-left: 42px;
+        }
+
+        .info-instax-balao .balao-texto strong {
+            color: #1e7e34;
+        }
+
+        .info-instax-balao .balao-link {
+            display: inline-block;
+            margin-top: 10px;
+            margin-left: 42px;
+            background: #25d366;
+            color: white;
+            font-weight: 600;
+            font-size: 0.85rem;
+            padding: 8px 18px;
+            border-radius: 40px;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        .info-instax-balao .balao-link:hover {
+            background: #1da851;
+        }
+
+        .combos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+            gap: 24px;
+            margin-top: 10px;
+        }
+
+        .combo-item {
+            background: #ffffff;
+            border-radius: 28px;
+            padding: 24px 20px 26px;
+            border: 1px solid #f0f0f0;
+            transition: all 0.25s ease;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .combo-item:hover {
+            transform: translateY(-6px);
+            border-color: #ff6b00;
+            box-shadow: 0 16px 40px rgba(255, 107, 0, 0.15);
+        }
+
+        .combo-item:nth-child(1) .combo-tag { background: #a29bfe; }
+        .combo-item:nth-child(2) .combo-tag { background: #ff9f43; }
+        .combo-item:nth-child(3) .combo-tag { background: #ff9f43; }
+        .combo-item:nth-child(4) .combo-tag { background: #feca57; }
+        .combo-item:nth-child(5) .combo-tag { background: #7b2cbf; }
+        .combo-item:nth-child(6) .combo-tag { background: #ff6b00; }
+
+        .combo-tag {
+            position: absolute;
+            top: -10px;
+            right: 16px;
+            color: white;
+            font-size: 0.6rem;
+            font-weight: 700;
+            padding: 4px 16px;
+            border-radius: 30px;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+        }
+
+        .combo-tag.destaque {
+            background: #ff9f43 !important;
+        }
+
+        .combo-tag.square-tag {
+            background: #7b2cbf !important;
+        }
+
+        .combo-tag.mini-tag {
+            background: #ff6b00 !important;
+            color: #fff !important;
+        }
+
+        .combo-nome {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 4px;
+        }
+
+        .combo-desc {
+            font-size: 0.9rem;
+            color: #777;
+            margin-bottom: 14px;
+            line-height: 1.4;
+            min-height: 40px;
+        }
+
+        .combo-desc small {
+            color: #999;
+            font-size: 0.8rem;
+        }
+
+        .combo-fotos {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px 14px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #333;
+            background: #fafafa;
+            padding: 12px 16px;
+            border-radius: 18px;
+            margin-bottom: 16px;
+            border: 1px solid #f0f0f0;
+        }
+
+        .combo-fotos span {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .combo-fotos .qtd {
+            font-weight: 700;
+            color: #000;
+        }
+
+        .combo-preco-antigo {
+            font-size: 0.95rem;
+            color: #bbb;
+            text-decoration: line-through;
+            margin-right: 10px;
+        }
+
+        .combo-preco {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin: 2px 0 4px;
+        }
+
+        .combo-preco small {
+            font-size: 1rem;
+            font-weight: 400;
+            color: #888;
+        }
+
+        .combo-preco.mini-preco {
+            color: #ff6b00;
+        }
+
+        .combo-preco.insta-preco {
+            color: #7b2cbf;
+        }
+
+        .combo-economia {
+            color: #2e7d32;
+            font-weight: 500;
+            font-size: 0.85rem;
+            margin-bottom: 14px;
+        }
+
+        .combo-economia.destaque-economia {
+            color: #e8436e;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        .combo-botao {
+            display: block;
+            width: 100%;
+            background: #1a1a1a;
+            color: white;
+            font-weight: 600;
+            font-size: 0.95rem;
+            padding: 14px 0;
+            border-radius: 40px;
+            text-align: center;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            margin-top: auto;
+            border: 0;
+            cursor: pointer;
+            letter-spacing: 0.3px;
+        }
+
+        .combo-botao:hover {
+            transform: scale(1.02);
+            opacity: 0.9;
+            background: #000;
+        }
+
+        .combo-botao.destaque-botao {
+            background: #ff6b00;
+        }
+
+        .combo-botao.destaque-botao:hover {
+            background: #e55a00;
+        }
+
+        .combo-botao.instagram-botao {
+            background: #7b2cbf;
+        }
+
+        .combo-botao.instagram-botao:hover {
+            background: #6a1fa8;
+        }
+
+        .combo-botao.mini-botao {
+            background: #ff6b00;
+            color: #fff;
+        }
+
+        .combo-botao.mini-botao:hover {
+            background: #e55a00;
+        }
+
+        .combo-botao.square-destaque {
+            background: #4ecdc4;
+            box-shadow: 0 4px 16px rgba(78, 205, 196, 0.4);
+        }
+
+        .combo-botao.square-destaque:hover {
+            background: #3dbdb5;
+        }
+
+        .menu-footer {
+            margin-top: 40px;
+            text-align: center;
+            padding-top: 25px;
+            border-top: 2px solid #f0f0f0;
+            color: #888;
+            font-size: 0.9rem;
+        }
+
+        .menu-footer strong {
+            color: #1a1a1a;
+        }
+
+        .menu-footer .observacao {
+            background: #fafafa;
+            padding: 8px 20px;
+            border-radius: 40px;
+            display: inline-block;
+            margin-top: 10px;
+            font-weight: 400;
+            color: #666;
+            border: 1px solid #f0f0f0;
+        }
+
+        .pagamento-info {
+            background: #e8f5e9;
+            border: 1px solid #25d366;
+            padding: 12px 24px;
+            border-radius: 40px;
+            display: inline-block;
+            margin-top: 10px;
+            font-weight: 500;
+            color: #1e7e34;
+            font-size: 0.9rem;
+        }
+
+        .pagamento-info strong {
+            color: #155724;
+        }
+
+        .frete-info {
+            background: #fff3cd;
+            border: 1px solid #ffc107;
+            padding: 12px 24px;
+            border-radius: 40px;
+            display: inline-block;
+            margin-top: 10px;
+            font-weight: 500;
+            color: #856404;
+            font-size: 0.9rem;
+        }
+
+        .frete-info strong {
+            color: #6c5200;
+        }
+
+        .validade-footer {
+            background: #fff0f0;
+            border: 1px solid #ff6b00;
+            padding: 10px 24px;
+            border-radius: 40px;
+            display: inline-block;
+            margin-top: 12px;
+            font-weight: 500;
+            color: #c0392b;
+            font-size: 0.85rem;
+        }
+
+        .validade-footer strong {
+            color: #a93226;
+        }
+
+        .instax-credit {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 0.8rem;
+            color: #bbb;
+            letter-spacing: 0.5px;
+        }
+
+        .instax-credit strong {
+            color: #999;
+            font-weight: 600;
+        }
+
+        @media (max-width: 680px) {
+            .menu-card {
+                padding: 20px 16px 30px;
+            }
+            .menu-header h1 {
+                font-size: 2rem;
+            }
+            .combos-grid {
+                grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+                gap: 16px;
+            }
+            .combo-preco {
+                font-size: 1.5rem;
+            }
+            .validade-badge, .validade-footer {
+                font-size: 0.75rem;
+                padding: 6px 14px;
+            }
+            .pagamento-info, .frete-info {
+                font-size: 0.8rem;
+                padding: 10px 16px;
+            }
+            .info-instax-balao {
+                padding: 14px 16px;
+            }
+            .info-instax-balao .balao-titulo {
+                font-size: 0.9rem;
+            }
+            .info-instax-balao .balao-texto {
+                font-size: 0.8rem;
+                padding-left: 0;
+            }
+            .info-instax-balao .balao-link {
+                margin-left: 0;
+                font-size: 0.8rem;
+                padding: 6px 14px;
+            }
+        }
+
+        @media print {
+            body { background: white !important; }
+            .menu-card { box-shadow: none !important; border: 3px solid #ff6b00; }
+            .combo-item { box-shadow: none !important; border: 1px solid #ddd; }
+            .validade-badge, .validade-footer {
+                border: 1px solid #ff6b00 !important;
+                background: #fff0f0 !important;
+            }
+            .info-instax-balao {
+                border: 2px dashed #25d366 !important;
+                background: #e8f5e9 !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .pagamento-info, .frete-info {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="menu-card">
+        <!-- Cabeçalho -->
+        <div class="menu-header">
+            <h1>
+                don’t just <strong>take</strong>,<br /><strong>give</strong>.™
+            </h1>
+            <p class="sub">Gavision Studio · Fotos instantâneas para guardar e compartilhar</p>
+            <div class="badge-cliente">🎁 OFERTA EXCLUSIVA PARA CLIENTES</div>
+            <div class="badge-oferta">✨ Mini a R$ 20,00 para clientes fiéis</div>
+            <div class="validade-badge">
+                ⏳ Promoções válidas de <strong>21/09/2026</strong> a <strong>20/10/2026</strong>
+            </div>
+        </div>
+
+        <!-- Instrução WhatsApp -->
+        <div style="text-align: center; margin-bottom: 20px;">
+            <span class="whatsapp-instrucao">📱 Clique no botão do combo para pedir via WhatsApp</span>
+        </div>
+
+        <!-- BALÃO DE INFORMAÇÕES INSTAX -->
+        <a href="https://wa.me/5571991370236?text=Ol%C3%A1%21%20Gostaria%20de%20saber%20mais%20sobre%20os%20tamanhos%20Instax%20%28Mini%2C%20Square%20e%20Wide%29.%20Pode%20me%20explicar%20a%20diferen%C3%A7a%20entre%20eles%3F" 
+           target="_blank" 
+           class="info-instax-balao">
+            <div class="balao-titulo">
+                <span class="icone">💬</span>
+                Quer saber mais sobre os tamanhos Instax?
+            </div>
+            <div class="balao-texto">
+                Cada tamanho tem um charme diferente: <strong>Mini</strong> é o clássico, <strong>Square</strong> é o formato do Instagram e <strong>Wide</strong> é o ideal para paisagens e grupos. Clique aqui e tire suas dúvidas direto com a gente no WhatsApp!
+            </div>
+            <span class="balao-link">💬 Falar no WhatsApp</span>
+        </a>
+
+        <!-- Grid de combos (do maior para o menor) -->
+        <div class="combos-grid">
+
+            <!-- 1. Premium Wide -->
+            <a href="https://wa.me/5571991370236?text=Ol%C3%A1%21%20Gostaria%20de%20pedir%20o%20combo%20%2APremium%20Wide%2A%20%282%20Wides%20e%201%20Square%29%20no%20valor%20de%20R%24%2079%2C99." 
+               target="_blank" class="combo-item">
+                <span class="combo-tag">🚀 Premium</span>
+                <div class="combo-nome">Premium Wide</div>
+                <div class="combo-desc">2 Wides + 1 Square<br /><small>Máxima qualidade para paisagens</small></div>
+                <div class="combo-fotos">
+                    <span>🟥 <span class="qtd">2</span> Wide</span>
+                    <span>🟧 <span class="qtd">1</span> Square</span>
+                </div>
+                <div>
+                    <span class="combo-preco-antigo">R$ 100,00</span>
+                </div>
+                <div class="combo-preco">R$ 79,99 <small>cada</small></div>
+                <div class="combo-economia">💰 Economize R$ 20,01</div>
+                <span class="combo-botao">✔ Quero este! (3 poses)</span>
+            </a>
+
+            <!-- 2. Misto Completo -->
+            <a href="https://wa.me/5571991370236?text=Ol%C3%A1%21%20Gostaria%20de%20pedir%20o%20combo%20%2AMisto%20Completo%2A%20%281%20Mini%2C%201%20Square%20e%201%20Wide%29%20no%20valor%20de%20R%24%2069%2C99." 
+               target="_blank" class="combo-item">
+                <span class="combo-tag destaque">🌟 Mais vendido</span>
+                <div class="combo-nome">Misto Completo</div>
+                <div class="combo-desc">1 de cada formato<br /><small>Leve os três tamanhos!</small></div>
+                <div class="combo-fotos">
+                    <span>🟦 <span class="qtd">1</span> Mini</span>
+                    <span>🟧 <span class="qtd">1</span> Square</span>
+                    <span>🟥 <span class="qtd">1</span> Wide</span>
+                </div>
+                <div>
+                    <span class="combo-preco-antigo">R$ 90,00</span>
+                </div>
+                <div class="combo-preco">R$ 69,99 <small>cada</small></div>
+                <div class="combo-economia">💰 Economize R$ 20,01</div>
+                <span class="combo-botao destaque-botao">✔ Quero este! (3 poses)</span>
+            </a>
+
+            <!-- 3. Square+Wide -->
+            <a href="https://wa.me/5571991370236?text=Ol%C3%A1%21%20Gostaria%20de%20pedir%20o%20combo%20%2ASquare%2BWide%2A%20%281%20Square%20%2B%201%20Wide%29%20no%20valor%20de%20R%24%2059%2C99." 
+               target="_blank" class="combo-item">
+                <span class="combo-tag destaque">🔥 Promoção</span>
+                <div class="combo-nome">Square+Wide</div>
+                <div class="combo-desc">1 Square + 1 Wide<br /><small>O combo que você esperava!</small></div>
+                <div class="combo-fotos">
+                    <span>🟧 <span class="qtd">1</span> Square</span>
+                    <span>🟥 <span class="qtd">1</span> Wide</span>
+                </div>
+                <div>
+                    <span class="combo-preco-antigo">R$ 65,00</span>
+                </div>
+                <div class="combo-preco">R$ 59,99 <small>cada</small></div>
+                <div class="combo-economia destaque-economia">🔥 Economize R$ 5,01</div>
+                <span class="combo-botao square-destaque">✔ Quero este! (2 poses)</span>
+            </a>
+
+            <!-- 4. 2 Squares -->
+            <a href="https://wa.me/5571991370236?text=Ol%C3%A1%21%20Gostaria%20de%20pedir%20o%20combo%20%2A2%20Squares%2A%20%282%20Squares%29%20no%20valor%20de%20R%24%2049%2C99." 
+               target="_blank" class="combo-item">
+                <span class="combo-tag">🔥 Queima</span>
+                <div class="combo-nome">2 Squares</div>
+                <div class="combo-desc">2 Squares<br /><small>Para quem ama o formato quadrado</small></div>
+                <div class="combo-fotos">
+                    <span>🟧 <span class="qtd">2</span> Square</span>
+                </div>
+                <div>
+                    <span class="combo-preco-antigo">R$ 60,00</span>
+                </div>
+                <div class="combo-preco">R$ 49,99 <small>cada</small></div>
+                <div class="combo-economia destaque-economia">🔥 Economize R$ 10,01</div>
+                <span class="combo-botao square-destaque">✔ Quero este! (2 poses)</span>
+            </a>
+
+            <!-- 5. Combo Seguidor -->
+            <a href="https://instagram.com/gavision.studio" 
+               target="_blank" class="combo-item">
+                <span class="combo-tag square-tag">🎁 Exclusivo</span>
+                <div class="combo-nome">Combo Seguidor</div>
+                <div class="combo-desc">Siga @gavision.studio<br /><small>e ganhe a Square com desconto</small></div>
+                <div class="combo-fotos">
+                    <span>🟧 <span class="qtd">1</span> Square</span>
+                    <span style="background:#4ecdc4; color:white; padding:0 10px; border-radius:12px; font-size:0.7rem; font-weight:700;">MAIS BARATO!</span>
+                </div>
+                <div>
+                    <span class="combo-preco-antigo">R$ 30,00</span>
+                </div>
+                <div class="combo-preco insta-preco">R$ 24,99 <small>Square</small></div>
+                <div class="combo-economia destaque-economia">🎁 Exclusivo para seguidores</div>
+                <span class="combo-botao instagram-botao">📲 Seguir e aproveitar</span>
+            </a>
+
+            <!-- 6. Mini Cliente -->
+            <a href="https://wa.me/5571991370236?text=Ol%C3%A1%21%20Sou%20cliente%20e%20gostaria%20de%20comprar%20uma%20foto%20%2AMini%20Cliente%2A%20no%20valor%20especial%20de%20R%24%2020%2C00." 
+               target="_blank" class="combo-item">
+                <span class="combo-tag mini-tag">🔥 Cliente VIP</span>
+                <div class="combo-nome">Mini Cliente</div>
+                <div class="combo-desc">1 Mini<br /><small>Preço especial para clientes fiéis</small></div>
+                <div class="combo-fotos">
+                    <span>🟦 <span class="qtd">1</span> Mini</span>
+                </div>
+                <div>
+                    <span class="combo-preco-antigo">R$ 25,00</span>
+                </div>
+                <div class="combo-preco mini-preco">R$ 20,00</div>
+                <div class="combo-economia">💰 Economize R$ 5,00</div>
+                <span class="combo-botao mini-botao">✔ Quero esta!</span>
+            </a>
+
+        </div>
+
+        <!-- Rodapé -->
+        <div class="menu-footer">
+            <p>
+                <strong>📦 Preços individuais:</strong> 
+                Mini: R$ 25,00 · Square: R$ 30,00 · Wide: R$ 35,00
+            </p>
+
+            <div class="pagamento-info">
+                💳 <strong>Parcelamos via link de pagamento!</strong> Consulte condições no WhatsApp.
+            </div>
+
+            <div class="frete-info">
+                🚚 <strong>Frete grátis</strong> para Salvador em compras acima de R$ 100,00.
+            </div>
+
+            <p style="margin-top: 12px; color:#ff6b00; font-weight:600;">
+                🎁 Promoções especiais para clientes fiéis!
+            </p>
+
+            <div class="observacao">
+                ⏳ Promoções válidas enquanto durarem os estoques · Descontos já aplicados
+            </div>
+
+            <div class="validade-footer">
+                📅 Esta tabela de preços é válida de <strong>21/09 a 20/10/2026</strong>.
+                Após essa data, os valores podem ser reajustados sem aviso prévio.
+            </div>
+
+            <div id="validade-dinamica" style="margin-top:8px; font-size:0.8rem; color:#999;"></div>
+        </div>
+
+        <!-- Crédito final -->
+        <div class="instax-credit">
+            don’t just take, give.™ · <strong>Gavision Studio</strong> · instax
+        </div>
+    </div>
+
+    <!-- JavaScript para validade dinâmica -->
+    <script>
+        (function() {
+            const dataInicio = new Date('2026-09-21T00:00:00');
+            const dataFim = new Date('2026-10-20T23:59:59');
+            const hoje = new Date();
+
+            const el = document.getElementById('validade-dinamica');
+            if (!el) return;
+
+            function formatarData(data) {
+                return data.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' });
+            }
+
+            function diffDias(a, b) {
+                const umDia = 24 * 60 * 60 * 1000;
+                return Math.ceil((b - a) / umDia);
+            }
+
+            if (hoje < dataInicio) {
+                const dias = diffDias(hoje, dataInicio);
+                el.textContent = `⏳ Faltam ${dias} dia${dias > 1 ? 's' : ''} para o início das promoções (${formatarData(dataInicio)}).`;
+            } else if (hoje >= dataInicio && hoje <= dataFim) {
+                const diasRestantes = diffDias(hoje, dataFim);
+                el.textContent = `🔥 Promoções ativas! Último dia: ${formatarData(dataFim)} (${diasRestantes} dia${diasRestantes > 1 ? 's' : ''} restante${diasRestantes > 1 ? 's' : ''}).`;
+            } else {
+                el.textContent = `⚠️ Promoções encerradas em ${formatarData(dataFim)}. Consulte os novos preços.`;
+            }
+        })();
+    </script>
+</body>
+</html>
